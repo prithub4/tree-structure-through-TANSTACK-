@@ -1,0 +1,79 @@
+import java.util.ArrayList;
+import java.util.List;
+
+class TreeNode {
+    int id;
+    String name;
+    List<TreeNode> subRows;
+
+    public TreeNode(int id, String name) {
+        this.id = id;
+        this.name = name;
+        this.subRows = new ArrayList<>();
+    }
+}
+
+class FlatData {
+    int id;
+    String name;
+    int parentId;
+
+    public FlatData(int id, String name, int parentId) {
+        this.id = id;
+        this.name = name;
+        this.parentId = parentId;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        List<FlatData> flatDataList = new ArrayList<>();
+        
+        // Populating flatDataList with sample data
+        flatDataList.add(new FlatData(1, "Parent A", -1));
+        flatDataList.add(new FlatData(2, "Child A1", 1));
+        flatDataList.add(new FlatData(3, "Child A2", 1));
+        flatDataList.add(new FlatData(4, "Parent B", -1));
+        flatDataList.add(new FlatData(5, "Child B1", 4));
+        
+        // Rest of the code to build the tree structure
+    }
+}
+
+
+
+
+
+
+
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+public class Main {
+    public static void main(String[] args) {
+        List<FlatData> flatDataList = new ArrayList<>();
+        // Add your flat data to the list
+        
+        Map<Integer, TreeNode> nodeMap = new HashMap<>();
+        TreeNode root = new TreeNode(-1, "Root"); // A dummy root node
+        nodeMap.put(-1, root);
+
+        for (FlatData flatData : flatDataList) {
+            TreeNode node = new TreeNode(flatData.id, flatData.name);
+            nodeMap.put(flatData.id, node);
+
+            TreeNode parent = nodeMap.get(flatData.parentId);
+            if (parent != null) {
+                parent.subRows.add(node);
+            }
+        }
+
+        List<TreeNode> treeData = root.subRows;
+        
+        // Now you can use the treeData in your React table
+    }
+}
+
